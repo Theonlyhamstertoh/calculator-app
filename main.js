@@ -23,6 +23,9 @@ const display = document.querySelector('.display');
 const factorial = document.getElementById('factorial'); 
 const warning = document.querySelector('.warning');
 
+let solution = false;
+const tempValue = [];
+
 const buttonArray = [zero, one, subtract, two, three, four, five, six, seven, eight, nine, sign, decimal, plus, factorial, square, multiply, divide, equal, clearAll, clear]
 
 buttonArray.forEach(item => {
@@ -33,7 +36,7 @@ buttonArray.forEach(item => {
 
 window.addEventListener('keydown', (e) => {
     const key = document.querySelector(`input[type][data-key="${e.key}"]`)
-        displayText(obj[key.id]);
+        displayText(obj[key.id])
     
 
 });
@@ -55,7 +58,7 @@ const obj = {
     plus: '+', 
     subtract: '-', 
     multiply: 'x', 
-    divide: '/', 
+    divide: '÷', 
     equal: '=', 
     clearAll: 'AC', 
     clear: 'clear',
@@ -64,10 +67,12 @@ const obj = {
     
 }
 
-
+let positive = true;
 function displayText(id) {
     console.log(id);
     switch(id) {
+
+          
         case 'clear':
             display.textContent = display.textContent.slice(0, -1);
             break;
@@ -75,58 +80,162 @@ function displayText(id) {
                 display.textContent ='';
                 rawDisplay.textContent = '';
                 break;
-        case '!':
-            () => { 
-                let n = Number(display.textContent)
-                rawDisplay.textContent = `${display.textContent} ${id}`;
-                display.textContent =  (n < 2 ? 1 : n * fac(n-1));
-            }
-            break;
         case 'x':
         case '-':
-        case '/':
+        case '÷':
         case '+':
             if(display.textContent.length < 1) {
                 warning.textContent = `You must have a number before chosing ${id}`;
-                return;
+                break;
+            } else if(solution === true){
+                rawDisplay.textContent = `${display.textContent} ${id} `;
+                display.textContent = ``
+                solution = false;
+                break;
             } else {
-                rawDisplay.textContent = `${display.textContent} ${id}`;
+                rawDisplay.textContent += `${display.textContent} ${id} `;
                 display.textContent ='';
                 break;
             }
       
-        case '=':
-            rawDisplay.textContent += ' ' + display.textContent;
-            display.textContent = doEquation(rawDisplay.textContent)
+        case '=': 
+            
+            //checks if there is operation at the end of the text to know if there really is a equation or not
+            if(solution === true) {
+                break;
+            } 
+            let top = rawDisplay.textContent.split(' ')
+            if(['x', '÷', '+', '-'].includes(top[top.length - 2])) {
+                rawDisplay.textContent += ' ' + display.textContent;
+                display.textContent = SplitEquation(rawDisplay.textContent)
+            } else {
+                rawDisplay.textContent = display.textContent;
+            
+
+            } 
+            solution = true;
             break;
+        case '+/-':
+            if(positive === true) {
+                display.textContent = '-' + display.textContent;
+                positive = false;
+            } else if(positive === false) {
+                display.textContent = display.textContent.slice(1);
+                positive = true;
+
+            }
+            break;
+            
+
+        case '.': 
+            if(display.textContent.includes('.') && solution === false) {
+                break;
+            } else if(solution === true) {
+                solution = false;
+                display.textContent = `0${id}`;
+                break;
+            } else {
+                if(display.textContent.length === 0) {
+                    display.textContent = `0${id}`;
+                    break;
+                } else {
+                    display.textContent += id;
+                    break;
+
+                }
+            }
         default: 
-            display.textContent += id;
+            if(solution === true) {
+                display.textContent = id;
+                rawDisplay.textContent = ''
+                solution = false;
+            } else {
+                display.textContent += id
+            }
+            break;
 
     }
-
 }
-// if I receive a equation like 6+5*5+655+8/5, I will first need to split all of them, convert the operators into actual operations and then do a giant addition of the array. 
+// the problem is that it is not resetting the value. If the first value is not a + - / *, then we should reset. 
 
-
-
-function doEquation(string) {
-    let value;
-    const equationArray = string.split(' ');
-    const operators = {
-        'x' :  Number(equationArray[0]) * Number(equationArray[2]),
-        '/' :  Number(equationArray[0]) / Number(equationArray[2]),
-        '-' :  Number(equationArray[0]) - Number(equationArray[2]),
-        '+' :  Number(equationArray[0]) + Number(equationArray[2]),
-    } 
-    equationArray.map(el => {
-        if(['x', '-', '+', '/'].includes(el)){    
-            value = operators[`${el}`] 
-        }
-    });
+const operators = {
+            'x' : (a, b) => {return a * b} ,
+            '÷' : (a, b) => {return a / b},
+            '-' : (a, b) => {
+                console.log('test', a, '-', b)
+                return Number(a) - Number(b)},
+            '+' : (a, b) => {
+                console.log('test', a, '+', b);
+                return Number(a) + Number(b)},
+        } 
     
-    console.log(value)
-    return value;
 
+function SplitEquation(string) {
+    console.log(string)
+    const equationArray = string.split(' ').filter(el => el !== '');
+
+    console.log(equationArray)
+    // I want to have it keep on pushing until it reaches a + or - or end
+    equationArray.filter((e, i) => {     
+        let spliceCount = i;
+        let deleteCount = 1;
+
+        
+        if(['x', '÷'].includes(e)) {
+            while(spliceCount <= equationArray.length) {
+                if( equationArray[spliceCount] !== undefined && !['+', '-'].includes(equationArray[spliceCount]) ) {
+                    spliceCount++;
+                    deleteCount++;
+                } else {
+                    this.splitedArray = equationArray.map(el => el).splice(i - 1, deleteCount);
+
+                    if(this.splitedArray.length === 1) {
+                        return this.splitedArray[0]; 
+                    } else {
+                        while(this.splitedArray.length !== 1) {
+                            this.splitedArray.filter((e, i) => {
+                                if(i > 1) {
+                                    return equationArray;
+                                } else if(['x','÷'].includes(e)) {
+                                    this.splitedArray.splice(i - 1, 3, operators[e](this.splitedArray[i - 1],this.splitedArray[i + 1]))
+                                    
+                                }
+                                
+                                
+                            }, 0)
+                            console.log(this.splitedArray)
+
+                        }
+                    }
+
+                    equationArray.splice(i - 1, deleteCount, this.splitedArray[0])
+                    break;
+                }
+                
+            }   
+        } 
+
+        
+    });
+
+    if(!['x', '÷'].includes(equationArray)) {
+        while(equationArray.length !== 1) {
+            equationArray.map((e, i) => {
+                if(i > 1) {
+                    return;
+                } else if(['-', '+'].includes(e)) {
+                    console.log(equationArray)
+                    console.log(i, e)
+                    equationArray.splice(i - 1, 3, operators[e](equationArray[i-1], equationArray[i + 1]))
+                    return equationArray;
+                }  
+            })
+         
+        }
+        return equationArray;
+    }
+    
 
 }
+
 

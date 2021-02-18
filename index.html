@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class='header'>
+        <h1>Calculator</h1>
+    </div>
     <div class='main'>
-        <div class='raw-display'></div>
-        <div class='display'></div>
-        <div class='warning'></div>
-        <div class='button wrapper'>
+        <div class='displayWrapper'>
+            <div class='raw-display'></div>
+            <div class='display'></div>
+
+        </div>
+        <div class='buttonWrapper'>
             <input type='button' data-key='0' class='buttonCSS' id='zero' value='0'>
             <input type='button' data-key='1'class='buttonCSS' id='one' value='1'>
             <input type='button' data-key='2'class='buttonCSS' id='two' value='2'>
@@ -35,8 +40,10 @@
             <input type='button' data-key='Backspace'class='buttonCSS' id='clear' value='C'>
         </div>
 
-
     </div>
+    <div class='warning'></div>
     <script src="main.js"></script>
 </body>
 </html>
+
+<!-- White and black theme?? -->
