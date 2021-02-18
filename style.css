@@ -4,17 +4,19 @@
 }
 
 
-.header {
+header {
     text-align: center;
     margin: 50px 0;
 }
 
-.main {
+main {
     display: grid;
-    grid-template-columns:400px;
-    grid-template-rows: 1fr 1fr;
+    background-color: burlywood;
+
+
     align-self: center;
     justify-content: center;
+    text-align: center;
 }
 
 
@@ -36,7 +38,9 @@
 }
 
 .buttonWrapper {
-
+    display: grid;
+    grid-template-columns: 50px 50px 50px 50px;
+    grid-template-rows: 50px 50px 50px 50px 50px 50px;
 }
 
 
