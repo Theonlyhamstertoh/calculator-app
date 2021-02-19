@@ -1,6 +1,8 @@
 ## Demo link ##
 https://theonlyhamstertoh.github.io/calculator-app/
 
+## Demo Image ##
+![alt text](https://github.com/theonlyhamstertoh/calculator-app/blob/[main]/images/finalize.png?raw=true)
 
 ## Project Information ##
 This calculator was completed within 5 days between February 15 - 19 to hold myself accountable to a deadline. The project is a part of the Odin Project.  
