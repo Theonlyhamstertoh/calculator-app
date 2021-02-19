@@ -2,56 +2,146 @@
     padding: 0;
     margin: 0;
 }
+.disableZoom {
+    touch-action: manipulation;
+}
 
+body {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-self: center;
+    background: linear-gradient(#a2fff45e, #CCFFFF );
+    touch-action: manipulation;
+
+}
 
 header {
     text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', 
+    Arial, sans-serif;
+    color: #ff477e;
     margin: 50px 0;
 }
 
 main {
-    display: grid;
-    background-color: burlywood;
-
-
+    background-color: #e9fffc;
+    width: 330px;
+    height: 545px;
     align-self: center;
-    justify-content: center;
-    text-align: center;
+    border-radius: 20px;
+    box-shadow: 
+        inset 2px 2px #d0f5edda,
+        2px 2px 1px 1px #54d3b92d;
+
+
 }
 
+.container {
+    
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    grid-template-rows: 120px repeat(5, 70px);
+    gap: 10px;
+    grid-template-areas: 
+    "display display display display"
+    "clearAll clear multiply divide"
+    "seven eight nine subtract"
+    "four five six plus"
+    "one two three equal"
+    "sign zero decimal equal";
+    justify-content: center;
+    text-align: end;
+}
 
 .displayWrapper {
-
+    display: grid;
+    grid-template-areas:
+        'displayTop'
+        'bigDisplay';
+    grid-template-rows: 20px 1fr;
+    font-family: monospace;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 
+        inset -2px -2px #b9dcdf6e,
+        inset 2px 2px #1a474b46;
+    overflow: hidden;
 }
 
-
 .raw-display {
-    background-color: antiquewhite;
-    width: 300px;
-    height: 20px;
+    padding: 5 8px;
+    font-size: 1.5em;
+    grid-area: displayTop;
+
 }
 
 .display {
-    background-color:bisque;
-    width: 300px;
-    height: 20px;
+    padding: 5px 8px;
+    font-size: 3em;
+    font-weight: 600;
+    display: flex;
+    justify-self: flex-end;
+    align-self: flex-end;
+    grid-area: bigDisplay;
+    overflow: hidden;
 }
 
-.buttonWrapper {
-    display: grid;
-    grid-template-columns: 50px 50px 50px 50px;
-    grid-template-rows: 50px 50px 50px 50px 50px 50px;
+
+.buttonCSS:focus {
+    background-color: #abd8d35e;
+    box-shadow: 
+        inset 1px 1px 5px .1px #abd8d35e,
+        3px 3px 5px .1px #c7edf06e;
+    cursor: pointer;
+    position: relative;
+    font-size: 2em;
+    bottom: 5px;
+    outline: none;
+
 }
-
-
-
 
 
 .buttonCSS {
-
+    background-color: #f7fff7;
+    font-family: monospace;
+    color: #49888685;
+    font-weight: 700;
+    border: none;
+    font-size: 1.8em;
+    outline: none;
+    -webkit-tap-highlight-color: transparent ;
+    border-radius: 100%;
+    box-shadow: 
+        inset 1px 1px 5px .1px #62d3c623,
+        -3px -3px 5px .1px #effdfc,
+        3px 3px 5px .1px #c7edf06e;
 }
 
 
-.operationCSS {
-
+#equal {
+    border-radius: 50px;
 }
+
+.displayWrapper {grid-area: display;}
+#zero {grid-area: zero;}
+#one {grid-area: one;}
+#two {grid-area: two;}
+#three {grid-area: three;}
+#four {grid-area: four;}
+#five {grid-area: five;}
+#six {grid-area: six;}
+#seven {grid-area: seven;}
+#eight {grid-area: eight;}
+#nine {grid-area: nine;}
+#sign {grid-area: sign;}
+#decimal {grid-area: decimal;}
+#plus {grid-area: plus;}
+#subtract {grid-area: subtract;}
+#multiply {grid-area: multiply;}
+#divide {grid-area: divide;}
+#equal {grid-area: equal;}
+#clearAll {grid-area: clearAll;}
+#clear {grid-area: clear;}
+#percent {grid-area: percent;}

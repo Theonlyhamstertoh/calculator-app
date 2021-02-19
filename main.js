@@ -17,16 +17,14 @@ const divide = document.getElementById('divide');
 const equal = document.getElementById('equal');
 const clearAll = document.getElementById('clearAll');
 const clear = document.getElementById('clear');
-const square = document.getElementById('square');
 const rawDisplay = document.querySelector('.raw-display');
 const display = document.querySelector('.display');
-const factorial = document.getElementById('factorial'); 
 const warning = document.querySelector('.warning');
 
 let solution = false;
 const tempValue = [];
 
-const buttonArray = [zero, one, subtract, two, three, four, five, six, seven, eight, nine, sign, decimal, plus, factorial, square, multiply, divide, equal, clearAll, clear]
+const buttonArray = [zero, one, subtract, two, three, four, five, six, seven, eight, nine, sign, decimal, plus, multiply, divide, equal, clearAll, clear]
 
 buttonArray.forEach(item => {
     item.addEventListener('click', () => {
@@ -36,7 +34,8 @@ buttonArray.forEach(item => {
 
 window.addEventListener('keydown', (e) => {
     const key = document.querySelector(`input[type][data-key="${e.key}"]`)
-        displayText(obj[key.id])
+    
+    displayText(obj[key.id])
     
 
 });
@@ -62,8 +61,6 @@ const obj = {
     equal: '=', 
     clearAll: 'AC', 
     clear: 'clear',
-    square: 'square',
-    factorial: '!'
     
 }
 
@@ -71,8 +68,6 @@ let positive = true;
 function displayText(id) {
     console.log(id);
     switch(id) {
-
-          
         case 'clear':
             display.textContent = display.textContent.slice(0, -1);
             break;
@@ -84,6 +79,10 @@ function displayText(id) {
         case '-':
         case '÷':
         case '+':
+            if(display.textContent.toString().length > 14) {
+                display.textContent = Number(display.textContent).toExponential(2);
+            }
+
             if(display.textContent.length < 1) {
                 warning.textContent = `You must have a number before chosing ${id}`;
                 break;
@@ -99,7 +98,9 @@ function displayText(id) {
             }
       
         case '=': 
-            
+            if(display.textContent.toString().length > 14) {
+                display.textContent = Number(display.textContent).toExponential(2);
+            }
             //checks if there is operation at the end of the text to know if there really is a equation or not
             if(solution === true) {
                 break;
@@ -232,9 +233,14 @@ function SplitEquation(string) {
             })
          
         }
-        return equationArray;
+
     }
     
+    console.log(equationArray[0].toString().length > 14)
+    if(equationArray[0].toString().length > 14) {
+        equationArray[0] = equationArray[0].toExponential(2)
+    }
+    return equationArray;
 
 }
 
