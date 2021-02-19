@@ -83,19 +83,31 @@ function displayText(id) {
                 display.textContent = Number(display.textContent).toExponential(2);
             }
 
+
             if(display.textContent.length < 1) {
-                warning.textContent = `You must have a number before chosing ${id}`;
+                warning.textContent = `please input a number`;
                 break;
-            } else if(solution === true){
-                rawDisplay.textContent = `${display.textContent} ${id} `;
+             } 
+            // else if(display.textContent >)
+            
+            if(solution === true){
+                
+         
+                rawDisplay.textContent = `${display.textContent} ${id}`;
                 display.textContent = ``
                 solution = false;
-                break;
             } else {
-                rawDisplay.textContent += `${display.textContent} ${id} `;
+                
+
+                rawDisplay.textContent += ` ${display.textContent} ${id} `;
                 display.textContent ='';
-                break;
+                console.log(rawDisplay.textContent)
+
             }
+
+            break;
+     
+            
       
         case '=': 
             if(display.textContent.toString().length > 14) {
@@ -161,7 +173,16 @@ function displayText(id) {
 
 const operators = {
             'x' : (a, b) => {return a * b} ,
-            '÷' : (a, b) => {return a / b},
+            '÷' : (a, b) => {
+                console.log(b)
+                if(b === '0' ) {
+                    warning.textContent = 'Division by zero is not possible!';
+                    display.textContent = '';
+                    rawDisplay.textContent = '';
+                } else {
+                    return a / b;
+                } 
+            },
             '-' : (a, b) => {
                 console.log('test', a, '-', b)
                 return Number(a) - Number(b)},
@@ -198,7 +219,13 @@ function SplitEquation(string) {
                                 if(i > 1) {
                                     return equationArray;
                                 } else if(['x','÷'].includes(e)) {
+                             
+                                    if(this.splitedArray[i + 1] === undefined) {
+                                        warning.textContent = 'Please input a number';
+                                    }  
                                     this.splitedArray.splice(i - 1, 3, operators[e](this.splitedArray[i - 1],this.splitedArray[i + 1]))
+                                        
+                                  
                                     
                                 }
                                 
@@ -236,7 +263,9 @@ function SplitEquation(string) {
 
     }
     
-    console.log(equationArray[0].toString().length > 14)
+    if(equationArray[0] === undefined || equationArray[0] === NaN) {
+        return 'ERROR';
+    }
     if(equationArray[0].toString().length > 14) {
         equationArray[0] = equationArray[0].toExponential(2)
     }

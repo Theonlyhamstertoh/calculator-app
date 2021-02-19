@@ -1,4 +1,4 @@
-##Demo link##
+## Demo link ##
 https://theonlyhamstertoh.github.io/calculator-app/
 
 
@@ -7,6 +7,10 @@ This calculator was completed within 5 days between February 15 - 19 to hold mys
 
 ## Skills Learned ##
 * How to manipulate a array and string with array.filter(), array.map(), array.reduce(), include(), etc.
+* Accessibility for mobile users
+* button animations 
+* improved in CSS Grid and CSS Flexbox
+* Improved in box shadow effects to create physical button looks
 
 ## Lessons Learned ##
 This project was definitely a tough one at the current knowledge I have. 

@@ -2,8 +2,26 @@
     padding: 0;
     margin: 0;
 }
+
 .disableZoom {
     touch-action: manipulation;
+}
+
+
+
+@media (hover: hover) {
+    .buttonCSS:hover {
+        background-color: #abd8d35e;
+        box-shadow: 
+            inset 1px 1px 5px .1px #abd8d35e,
+            3px 3px 5px .1px #c7edf06e;
+        cursor: pointer;
+        position: relative;
+        font-size: 2em;
+        bottom: 5px;
+        outline: none;
+    
+    }
 }
 
 body {
@@ -11,23 +29,33 @@ body {
     flex-direction: column;
     text-align: center;
     align-self: center;
-    background: linear-gradient(#a2fff45e, #CCFFFF );
+    background-color: #d7f6fa;
     touch-action: manipulation;
 
 }
 
+span {
+    color: #ff3c00;
+}
+
+h1 {
+    color: rgb(255, 255, 255);
+}
 header {
     text-align: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', 
-    Arial, sans-serif;
-    color: #ff477e;
+    font-family: monospace;
+    color: black;
+    font-weight: 100;
+    font-size: 28px;
     margin: 50px 0;
+    letter-spacing: 4px;
 }
+
 
 main {
     background-color: #e9fffc;
-    width: 330px;
-    height: 545px;
+    width: 335px;
+    height: 540px;
     align-self: center;
     border-radius: 20px;
     box-shadow: 
@@ -88,19 +116,6 @@ main {
     overflow: hidden;
 }
 
-
-.buttonCSS:focus {
-    background-color: #abd8d35e;
-    box-shadow: 
-        inset 1px 1px 5px .1px #abd8d35e,
-        3px 3px 5px .1px #c7edf06e;
-    cursor: pointer;
-    position: relative;
-    font-size: 2em;
-    bottom: 5px;
-    outline: none;
-
-}
 
 
 .buttonCSS {
