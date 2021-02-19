@@ -66,108 +66,161 @@ const obj = {
 
 let positive = true;
 function displayText(id) {
-    console.log(id);
-    switch(id) {
-        case 'clear':
-            display.textContent = display.textContent.slice(0, -1);
-            break;
-            case 'AC':
-                display.textContent ='';
-                rawDisplay.textContent = '';
-                break;
-        case 'x':
-        case '-':
-        case '÷':
-        case '+':
-            if(display.textContent.toString().length > 14) {
-                display.textContent = Number(display.textContent).toExponential(2);
-            }
+    let rawData = rawDisplay.textContent.toString().length;
+    let bigData = display.textContent.toString().length;
 
-
-            if(display.textContent.length < 1) {
-                warning.textContent = `please input a number`;
-                break;
-             } 
-            // else if(display.textContent >)
-            
-            if(solution === true){
-                
-         
-                rawDisplay.textContent = `${display.textContent} ${id}`;
-                display.textContent = ``
-                solution = false;
-            } else {
-                
-
-                rawDisplay.textContent += ` ${display.textContent} ${id} `;
-                display.textContent ='';
-                console.log(rawDisplay.textContent)
-
-            }
-
-            break;
-     
-            
-      
-        case '=': 
-            if(display.textContent.toString().length > 14) {
-                display.textContent = Number(display.textContent).toExponential(2);
-            }
-            //checks if there is operation at the end of the text to know if there really is a equation or not
-            if(solution === true) {
-                break;
-            } 
-            let top = rawDisplay.textContent.split(' ')
-            if(['x', '÷', '+', '-'].includes(top[top.length - 2])) {
-                rawDisplay.textContent += ' ' + display.textContent;
-                display.textContent = SplitEquation(rawDisplay.textContent)
-            } else {
-                rawDisplay.textContent = display.textContent;
-            
-
-            } 
-            solution = true;
-            break;
-        case '+/-':
-            if(positive === true) {
-                display.textContent = '-' + display.textContent;
-                positive = false;
-            } else if(positive === false) {
-                display.textContent = display.textContent.slice(1);
-                positive = true;
-
-            }
-            break;
-            
-
-        case '.': 
-            if(display.textContent.includes('.') && solution === false) {
-                break;
-            } else if(solution === true) {
-                solution = false;
-                display.textContent = `0${id}`;
-                break;
-            } else {
+    if(rawData < 60 && bigData < 10) {
+        warning.textContent = '';
+        switch(id) {
+            case 'clear':
                 if(display.textContent.length === 0) {
+                    rawDisplay.textContent = rawDisplay.textContent.slice(0, -2)
+                } else {
+                    display.textContent = display.textContent.slice(0, -1);
+                }
+                break;
+                case 'AC':
+                    display.textContent ='';
+                    rawDisplay.textContent = '';
+                    break;
+            case 'x':
+            case '-':
+            case '÷':
+            case '+':
+                if(display.textContent.toString().length > 14) {
+                    display.textContent = Number(display.textContent).toExponential(2);
+                }
+    
+    
+                if(display.textContent.length < 1) {
+                    warning.textContent = `please input a number`;
+                    break;
+                 } 
+                // else if(display.textContent >)
+                
+                if(solution === true){
+                    
+             
+                    rawDisplay.textContent = `${display.textContent} ${id} `;
+                    display.textContent = ``
+                    solution = false;
+    
+                } else {
+                    
+    
+                    rawDisplay.textContent += `${display.textContent} ${id} `;
+                    display.textContent ='';
+    
+    
+                }
+                console.log(rawDisplay.textContent)
+                break;
+                
+          
+            case '=': 
+    
+                if(bigData > 14) {
+                    display.textContent = Number(display.textContent).toExponential(2);
+                }
+                //checks if there is operation at the end of the text to know if there really is a equation or not
+                if(solution === true) {
+                    break;
+                } 
+                let top = rawDisplay.textContent.split(' ')
+                if(['x', '÷', '+', '-'].includes(top[top.length - 2])) {
+                    rawDisplay.textContent += ' ' + display.textContent;
+                    display.textContent = SplitEquation(rawDisplay.textContent)
+                } else {
+                    rawDisplay.textContent = display.textContent;
+                
+    
+                } 
+                solution = true;
+                break;
+            case '+/-':
+                if(positive === true) {
+                    display.textContent = '-' + display.textContent;
+                    positive = false;
+                } else if(positive === false) {
+                    display.textContent = display.textContent.slice(1);
+                    positive = true;
+    
+                }
+                break;
+                
+    
+            case '.': 
+                if(display.textContent.includes('.') && solution === false) {
+                    break;
+                } else if(solution === true) {
+                    solution = false;
                     display.textContent = `0${id}`;
                     break;
                 } else {
-                    display.textContent += id;
-                    break;
-
+                    if(display.textContent.length === 0) {
+                        display.textContent = `0${id}`;
+                        break;
+                    } else {
+                        display.textContent += id;
+                        break;
+    
+                    }
                 }
-            }
-        default: 
-            if(solution === true) {
-                display.textContent = id;
-                rawDisplay.textContent = ''
-                solution = false;
-            } else {
-                display.textContent += id
-            }
-            break;
+            default: 
+                if(solution === true) {
+                    display.textContent = id;
+                    rawDisplay.textContent = ''
+                    solution = false;
+                } else {
+                    display.textContent += id
+                }
+                break;
+    
+        }
+    
+    } else {
+        warning.textContent = 'You have reached max length - delete a few values or clear to continue';
 
+        switch(id) {
+            case 'clear':
+                if(display.textContent.length === 0) {
+                    rawDisplay.textContent = rawDisplay.textContent.slice(0, -2)
+                } else {
+                    display.textContent = display.textContent.slice(0, -1);
+                }
+                break;
+            case 'AC':
+                    display.textContent ='';
+                    rawDisplay.textContent = '';
+                    break;
+            case '=': 
+    
+                    if(bigData > 14) {
+                        display.textContent = Number(display.textContent).toExponential(2);
+                    }
+                    //checks if there is operation at the end of the text to know if there really is a equation or not
+                    if(solution === true) {
+                        break;
+                    } 
+                    let top = rawDisplay.textContent.split(' ')
+                    if(['x', '÷', '+', '-'].includes(top[top.length - 2])) {
+                        rawDisplay.textContent += ' ' + display.textContent;
+                        display.textContent = SplitEquation(rawDisplay.textContent)
+                    } else {
+                        rawDisplay.textContent = display.textContent;
+                    
+        
+                    } 
+                    solution = true;
+                    break;
+        }
+            
+        
     }
+
+    console.log(id);
+
+    
 }
 // the problem is that it is not resetting the value. If the first value is not a + - / *, then we should reset. 
 
@@ -193,6 +246,7 @@ const operators = {
     
 
 function SplitEquation(string) {
+    console.log('asdasdasdasdasdasd')
     console.log(string)
     const equationArray = string.split(' ').filter(el => el !== '');
 
@@ -220,9 +274,6 @@ function SplitEquation(string) {
                                     return equationArray;
                                 } else if(['x','÷'].includes(e)) {
                              
-                                    if(this.splitedArray[i + 1] === undefined) {
-                                        warning.textContent = 'Please input a number';
-                                    }  
                                     this.splitedArray.splice(i - 1, 3, operators[e](this.splitedArray[i - 1],this.splitedArray[i + 1]))
                                         
                                   
@@ -258,14 +309,12 @@ function SplitEquation(string) {
                     return equationArray;
                 }  
             })
-         
+            
         }
-
+        
     }
     
-    if(equationArray[0] === undefined || equationArray[0] === NaN) {
-        return 'ERROR';
-    }
+    console.log('asdasdasdasdasdas')
     if(equationArray[0].toString().length > 14) {
         equationArray[0] = equationArray[0].toExponential(2)
     }
